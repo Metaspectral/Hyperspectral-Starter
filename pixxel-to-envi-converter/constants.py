@@ -13,6 +13,6 @@
 #                            created in the same dir
 # ==================================================================================
 
-GEOTIFF_FILE_PATH = "/home/cbow/mlvx/data/img_data/pixxel_imgs/TD4/geotiff.tif"
-XML_METADATA_FILE_PATH = "/home/cbow/mlvx/data/img_data/pixxel_imgs/TD4/metadata.xml"
-OUTPUT_HDR_FILE_PATH = "/home/cbow/mlvx/data/img_data/pixxel_imgs/TD4/raw.hdr"
+GEOTIFF_FILE_PATH = "/location/to/pixxel/geotiff.tif"
+XML_METADATA_FILE_PATH = "/location/to/pixxel/metadata.xml"
+OUTPUT_HDR_FILE_PATH = "/location/to/pixxel/raw.hdr"

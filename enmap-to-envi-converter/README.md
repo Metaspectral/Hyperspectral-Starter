@@ -40,7 +40,3 @@ Before running the converter, ensure that you have the necessary third party pac
 2. Run `python main.py`
 3. Verify that there is a `.hdr` and `.raw` file within the specified output dir
 4. Upload ENVI files to the Fusion Platform
-
-## Troubleshooting
-
-Should there be any issues with the file conversion or you have any other questions, please don't hesitate to reach out to us at Metaspectral.
