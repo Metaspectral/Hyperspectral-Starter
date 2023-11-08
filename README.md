@@ -6,21 +6,32 @@ Welcome to the Hyperspectral Starter repository by Metaspectral. This repository
 
 The following is a list of publicly available hyperspectral data sources that you can utilize for your research and projects:
 
-- **PRISMA (PRecursore IperSpettrale della Missione Applicativa)**: An Italian Space Agency project providing hyperspectral data with high radiometric and spectral resolution. [Register and Access PRISMA Data](https://sbg.jpl.nasa.gov/news-events/prisma-data-are-now-available-for-access)
-- **EnMAP (Environmental Mapping and Analysis Program)**: A German hyperspectral satellite mission that aims to assess the state and evolution of various terrestrial and coastal ecosystems. [Register and Access EnMAP Data](https://www.enmap.org/)
-- **AVIRIS (Airborne Visible/Infrared Imaging Spectrometer)**: Managed by NASA's Jet Propulsion Laboratory, AVIRIS is an advanced airborne sensor that collects hyperspectral imagery of the Earth's surface. [Access AVIRIS Data](https://aviris.jpl.nasa.gov/data/get_aviris_data.html)
-- **Hyperion EO-1 (Earth Observing-1)**: NASA's satellite mission providing detailed hyperspectral images for Earth observation and research purposes. [Register and Access Hyperion EO-1 Data](https://data.nasa.gov/dataset/EO-1-Hyperion/ethf-arwz/data)
-- **EMIT (Earth Surface Mineral Dust Source Investigation)**: A mission dedicated to identifying the composition of mineral dust from Earth's arid regions. [Register and Access EMIT Data](https://urs.earthdata.nasa.gov/). Select "View All" on Instruments and check EMIT.
+- **PRISMA (PRecursore IperSpettrale della Missione Applicativa)**: An Italian Space Agency project providing hyperspectral data with high radiometric and spectral resolution. [Register and Access PRISMA Data](https://sbg.jpl.nasa.gov/news-events/prisma-data-are-now-available-for-access) - ❌ Not supported yet. (Explanation: We are actively working on adding support for PRISMA data and plan to include conversion scripts in the future. Stay tuned for updates!)
+
+- **EnMAP (Environmental Mapping and Analysis Program)**: A German hyperspectral satellite mission that aims to assess the state and evolution of various terrestrial and coastal ecosystems. [Register and Access EnMAP Data](https://www.enmap.org/) - ✅ Supported through [EnMAP to ENVI](./enmap-to-envi-converter) conversion.
+
+- **AVIRIS (Airborne Visible/Infrared Imaging Spectrometer)**: Managed by NASA's Jet Propulsion Laboratory, AVIRIS is an advanced airborne sensor that collects hyperspectral imagery of the Earth's surface. [Access AVIRIS Data](https://aviris.jpl.nasa.gov/data/get_aviris_data.html) - ✅ Supported directly through Fusion.
+
+- **Hyperion EO-1 (Earth Observing-1)**: NASA's satellite mission providing detailed hyperspectral images for Earth observation and research purposes. [Register and Access Hyperion EO-1 Data](https://data.nasa.gov/dataset/EO-1-Hyperion/ethf-arwz/data) - ❌ Not supported yet. (Explanation: We have plans to add support for Hyperion EO-1 data in future updates.)
+
+- **EMIT (Earth Surface Mineral Dust Source Investigation)**: A mission dedicated to identifying the composition of mineral dust from Earth's arid regions. [Register and Access EMIT Data](https://urs.earthdata.nasa.gov/). Select "View All" on Instruments and check EMIT. - ❌ Not supported yet. (Explanation: We are actively exploring options to support EMIT data and will update the repository when available.)
+
+
+Please note that our goal is to provide comprehensive support for various hyperspectral data sources, and we are continuously working to expand our capabilities. If you have specific data sources or formats you'd like us to prioritize, please feel free to contact us at [support@metaspectral.com](mailto:support@metaspectral.com).
 
 ## Data Conversion Scripts
 
-To facilitate the use of these data sources within the Fusion platform, we provide a set of conversion scripts. These scripts will convert the raw hyperspectral data into a compatible format for upload and processing within Fusion.
+While we are working on being able to import these data sources directly into Fusion, we provide you with a set of scripts. These scripts will convert the raw hyperspectral data into a compatible format for upload and processing within Fusion.
 
-- `prisma_to_fusion.py`: Convert PRISMA data for Fusion.
-- `enmap_to_fusion.py`: Prepare EnMAP data for Fusion use.
+- [EnMAP to ENVI]((./enmap-to-envi-converter)): Prepare EnMAP data for Fusion use.
+- [Pixxel to ENVI](./pixxel-to-envi-converter): Prepare EnMAP data for Fusion use.
+
+If other formats are needed, please file an issue or contact us at [support@metaspectral.com](mailto:support@metaspectral.com).
+
+<!-- - `prisma_to_fusion.py`: Convert PRISMA data for Fusion.
 - `aviris_to_fusion.py`: Transform AVIRIS data into Fusion-ready format.
 - `hyperion_to_fusion.py`: Adapt Hyperion EO-1 data for Fusion.
-- `emit_to_fusion.py`: Process EMIT data for Fusion compatibility.
+- `emit_to_fusion.py`: Process EMIT data for Fusion compatibility. -->
 
 ## About Fusion
 
