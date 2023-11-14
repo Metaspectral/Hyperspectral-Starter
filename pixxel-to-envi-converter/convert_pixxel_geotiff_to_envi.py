@@ -39,10 +39,10 @@ class PixxelConverter(object):
         self.validate_input_file()
         print("Starting conversion...")
         
-        self.parse_metadata_file_v1()
+        # self.parse_metadata_file_v1()
         
         # Uncomment this if the v1 method did not work:
-        # self.parse_metadata_file_v2()
+        self.parse_metadata_file_v2()
         self.parse_geotiff_file()
         self.get_data_type()
         self.validate_wavelengths()
