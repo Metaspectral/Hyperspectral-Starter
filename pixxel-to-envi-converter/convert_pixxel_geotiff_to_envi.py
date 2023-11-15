@@ -1,5 +1,5 @@
 """
-DESCRIPTION: Python script that converts an EnMap GeoTIFF to ENVI Standard.
+DESCRIPTION: Python script that converts an Pixxel GeoTIFF to ENVI Standard.
 """
 import os
 import rasterio
@@ -14,6 +14,7 @@ FILE_TYPE = "ENVI"
 HEADER_OFFSET = 0
 BYTE_ORDER = 0
 INTERLEAVE = "BIL"
+
 
 class PixxelConverter(object):
     def __init__(self, geotiff_path: str, metadata_path: str, output_dir: str):
@@ -36,13 +37,14 @@ class PixxelConverter(object):
 
     def convert_geotiff(self):
         print("Validating input files...")
-        self.validate_input_file()
+        # self.validate_input_file()
         print("Starting conversion...")
-        
+
         # self.parse_metadata_file_v1()
-        
+
         # Uncomment this if the v1 method did not work:
         self.parse_metadata_file_v2()
+
         self.parse_geotiff_file()
         self.get_data_type()
         self.validate_wavelengths()
@@ -52,21 +54,26 @@ class PixxelConverter(object):
     def validate_input_file(self):
         if not os.path.isfile(self.geotiff_path):
             print(f"ERROR: GeoTIFF file doesn't exist - {self.geotiff_path}")
-            raise FileNotFoundError(f"{self.geotiff_path} was not found or is a directory")
+            raise FileNotFoundError(
+                f"{self.geotiff_path} was not found or is a directory"
+            )
         if not os.path.isfile(self.metadata_path):
-            print(f"ERROR: EnMap Metadata XML file doesn't exist - {self.metadata_path}")
-            raise FileNotFoundError(f"{self.metadata_path} was not found or is a directory")
+            print(
+                f"ERROR: EnMap Metadata XML file doesn't exist - {self.metadata_path}"
+            )
+            raise FileNotFoundError(
+                f"{self.metadata_path} was not found or is a directory"
+            )
         print("GeoTIFF and XML Metadata files are valid")
 
     def parse_metadata_file_v1(self):
         # constants specific to reading the XML Metadata file specific to Pixxel GeoTIFFs
-        wavelength_element = 'Wavelength_list'
+        wavelength_element = "Wavelength_list"
         wavelength_unit_element = "unit"
-        fwhm_element = 'FWHM_list'
+        fwhm_element = "FWHM_list"
 
         tree = ET.parse(self.metadata_path)
         root = tree.getroot()
-
 
         wavelengths_txt = root.find(wavelength_element).text
         wavelengths_str = wavelengths_txt.strip("{}").split(",")
@@ -74,7 +81,9 @@ class PixxelConverter(object):
         wavelengths = [float(number) for number in filtered_array if number.strip()]
         self.wavelengths = wavelengths
 
-        self.wavelength_units = root.find(wavelength_element).get(wavelength_unit_element)
+        self.wavelength_units = root.find(wavelength_element).get(
+            wavelength_unit_element
+        )
 
         fwhm_txt = root.find(fwhm_element).text
         fwhm_str = fwhm_txt.strip("{}").split(",")
@@ -83,50 +92,50 @@ class PixxelConverter(object):
         self.fwhm = fwhm
 
         print("XML Metadata file parsed")
-        
-	def parse_metadata_file_v2(self):
-    	# Some metadatas match this pattern 
-		# constants specific to reading the XML Metadata file specific to Pixxel
-		# GeoTIFFs
-		wavelength_element = "Central_Wavelength"
-		wavelength_unit_element = "unit"
-		central_wavelength_element = ".//Central_Wavelength"
-		fwhm_element = "Bandwidth"
-		status_element = "Status"
 
-		tree = ET.parse(self.metadata_path)
+    def parse_metadata_file_v2(self):
+        # Some metadatas match this pattern
+        # constants specific to reading the XML Metadata file specific to Pixxel
+        # GeoTIFFs
+        wavelength_element = "Central_Wavelength"
+        wavelength_unit_element = "unit"
+        central_wavelength_element = ".//Central_Wavelength"
+        fwhm_element = "Bandwidth"
+        status_element = "Status"
 
-		# Extract the list of central wavelengths and bandwidths for bands that
-		# appear in the image
-		wavelengths = []
-		bandwidths = []
-		for band in tree.findall(".//Bands"):
-			status = band.find(status_element)
-			# Check if the band appears in the image
-			if status is not None and status.text == "1":
-			    central_wavelength = band.find(wavelength_element)
-			    if central_wavelength is not None:
-			        wavelengths.append(float(central_wavelength.text))
+        tree = ET.parse(self.metadata_path)
 
-			    bandwidth_element_obj = band.find(fwhm_element)
-			    if bandwidth_element_obj is not None:
-			        bandwidths.append(float(bandwidth_element_obj.text))
+        # Extract the list of central wavelengths and bandwidths for bands that
+        # appear in the image
+        wavelengths = []
+        bandwidths = []
+        for band in tree.findall(".//Bands"):
+            status = band.find(status_element)
+            # Check if the band appears in the image
+            if status is not None and status.text == "1":
+                central_wavelength = band.find(wavelength_element)
+                if central_wavelength is not None:
+                    wavelengths.append(float(central_wavelength.text))
 
-		self.wavelengths = wavelengths
-		self.fwhm = bandwidths
-		self.wavelength_units = tree.find(central_wavelength_element).get(
-			wavelength_unit_element
-		)
+                bandwidth_element_obj = band.find(fwhm_element)
+                if bandwidth_element_obj is not None:
+                    bandwidths.append(float(bandwidth_element_obj.text))
 
-		print("XML Metadata file parsed")
+        self.wavelengths = wavelengths
+        self.fwhm = bandwidths
+        self.wavelength_units = tree.find(central_wavelength_element).get(
+            wavelength_unit_element
+        )
 
-    def get_byte_order(self):                
-        with open(self.geotiff_path, 'rb') as tiff_file:
+        print("XML Metadata file parsed")
+
+    def get_byte_order(self):
+        with open(self.geotiff_path, "rb") as tiff_file:
             # Read the first 2 bytes of the file
             header = tiff_file.read(2)
-            if header == b'II':
+            if header == b"II":
                 self.byte_order = 0
-            elif header == b'MM':
+            elif header == b"MM":
                 self.byte_order = 1
             else:
                 self.byte_order = -1
@@ -146,20 +155,26 @@ class PixxelConverter(object):
             # Get the geospatial metadata (map information).
             crs = src.crs
             transform = src.transform
-            self.map_info = f'{crs}, 1.000, 1.000, {transform.c}, {transform.f}, {transform.a}, {transform.e}'
+            self.map_info = f"{crs}, 1.000, 1.000, {transform.c}, {transform.f}, {transform.a}, {transform.e}"
             self.data = src.read()
             self.lines = self.data.shape[1]
             self.samples = self.data.shape[2]
             self.bands = self.data.shape[0]
             print(f"The dimensions of the image are: {self.data.shape}")
-            print(f"Lines = {self.lines} | Samples = {self.samples} | Bands = {self.bands}")
+            print(
+                f"Lines = {self.lines} | Samples = {self.samples} | Bands = {self.bands}"
+            )
         print("GeoTIFF file parsed")
 
     def validate_wavelengths(self):
         if len(self.wavelengths) != self.bands:
-            print(f"ERROR: The number of wavelengths ({len(self.wavelengths)}) does not equal the number of bands ({self.bands})")
+            print(
+                f"ERROR: The number of wavelengths ({len(self.wavelengths)}) does not equal the number of bands ({self.bands})"
+            )
         if len(self.fwhm) != self.bands:
-            print(f"ERROR: The number of fwhm ({len(self.fwhm)}) does not equal the number of bands ({self.bands})")
+            print(
+                f"ERROR: The number of fwhm ({len(self.fwhm)}) does not equal the number of bands ({self.bands})"
+            )
 
     # NOTE: This function will normalise data between 0 and 1 using standard deviation
     def normalise_hsi_data(self):
@@ -174,10 +189,18 @@ class PixxelConverter(object):
         min_normalized = np.min(normalized_numbers)
         max_normalized = np.max(normalized_numbers)
 
-        normalized_numbers = np.array([(x - min_normalized) / (max_normalized - min_normalized) * (max_value_out - min_value_out) + min_value_out for x in normalized_numbers])
+        normalized_numbers = np.array(
+            [
+                (x - min_normalized)
+                / (max_normalized - min_normalized)
+                * (max_value_out - min_value_out)
+                + min_value_out
+                for x in normalized_numbers
+            ]
+        )
         return normalized_numbers
 
-    def process_hsi_data(self);
+    def process_hsi_data(self):
         hsi_data = np.transpose(self.data, [1, 2, 0])
         return hsi_data
 
