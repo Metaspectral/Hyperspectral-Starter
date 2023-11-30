@@ -2,7 +2,7 @@
 APP_DIR=$(dirname "$(realpath "$0")")
 
 # Load env vars
-LOCAL_ENV_PATH="$APP_DIR/env"
+LOCAL_ENV_PATH="$APP_DIR/venv"
 REQUIREMENTS_SPEC_PATH="$APP_DIR/requirements.in"
 REQUIREMENTS_PATH="$APP_DIR/requirements.txt"
 ACTIVATE_PATH="$LOCAL_ENV_PATH/bin/activate"
@@ -25,7 +25,7 @@ fi
 if (( NEEDS_INSTALL )); then
     echo "Installing..."
     rm -rf "$LOCAL_ENV_PATH"
-    echo "Creating a virtual environment 'env' in $APP_DIR..."
+    echo "Creating a virtual environment 'venv' in $APP_DIR..."
     python3.10 -m venv "$LOCAL_ENV_PATH"
 fi
 

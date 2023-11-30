@@ -26,7 +26,8 @@ def convert_file(
 ):
     if not os.path.exists(file_path):
         typer.echo(f"File path {file_path} does not exist")
-        raise typer.Exit(code=1)
+        exit(1)
+
     print("==============================================")
     print("              HYPERION CONVERSION")
     print("==============================================")

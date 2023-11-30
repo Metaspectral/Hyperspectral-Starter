@@ -3,7 +3,7 @@ $scriptPath = $MyInvocation.MyCommand.Path
 $appDir = Split-Path $scriptPath
 
 # Set up paths
-$localEnvPath = Join-Path $appDir "env"
+$localEnvPath = Join-Path $appDir "venv"
 $requirementsSpecPath = Join-Path $appDir "requirements.in"
 $requirementsPath = Join-Path $appDir "requirements.txt"
 $activatePath = Join-Path $localEnvPath "bin\Activate.ps1"
@@ -25,7 +25,7 @@ if ($args[0] -eq "--install") {
 if ($needsInstall) {
     Write-Host "Installing..."
     Remove-Item $localEnvPath -Recurse -Force -ErrorAction SilentlyContinue
-    Write-Host "Creating a virtual environment 'env' in $appDir..."
+    Write-Host "Creating a virtual environment 'venv' in $appDir..."
     python3.10 -m venv $localEnvPath
 }
 
