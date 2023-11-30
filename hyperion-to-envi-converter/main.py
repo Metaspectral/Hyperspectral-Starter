@@ -11,6 +11,7 @@ from datetime import datetime
 import os
 import spectral
 from convert_hyperion_to_envi import HyperionConverter
+import constants
 import typer
 
 app = typer.Typer(add_completion=False)
@@ -52,4 +53,7 @@ def convert_file(
 
 
 if __name__ == "__main__":
-    app()
+    if constants.GEOTIFF_FILE_PATH and constants.OUTPUT_HDR_FILE_PATH:
+        convert_file(constants.GEOTIFF_FILE_PATH, constants.OUTPUT_HDR_FILE_PATH)
+    else:
+        app()

@@ -16,7 +16,7 @@ from ENVI import (
     ByteOrderEnum,
     DATA_TYPES,
 )
-from constants import (
+from hyperion_data import (
     BANDS,
     BOM_MAP,
     SCALING_MAP,
