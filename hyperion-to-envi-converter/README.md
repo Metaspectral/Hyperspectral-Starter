@@ -4,31 +4,38 @@ This module is used to convert GeoTIFF files captured by the Hyperion instrument
 ## Dependencies
 You must have Python 3.10 installed.
 
-The first time the converter runs, it will install its dependencies in a local virtual environment.
+The first time the converter runs, it will install the dependencies found in requirements.txt in a local virtual environment.
 
 ## Running the Converter (Simple)
-For a simple start:
+For a quick start:
 1. Update the file paths in `constants.py`
 2. Run `python run.py` to convert your files
 
-## Running the Converter from the CLI
-From within the `./hyperion-to-envi-converter` directory you may run the converter in the following way:
+## Running the Converter (Options)
+You may also specify files from the command line.
 
-**Linux (From Bash)**:
-```bash
-# Outputs /your/file.hdr and /your/file.raw
-./run.sh /your/file.tif
+**NOTE: If the paths in `constants.py` are not empty, they will supersede CLI arguments.
 
-# Outputs /output/file.hdr and /output/file.raw
-./run.sh /your/file.tif -o /output/file.hdr
-```
-**Windows (From Powershell)**:
+### Windows
+
+On Windows run using paths with back slashes:
 ```powershell
 # Outputs C:\your\file.hdr and C:\your\file.raw
-.\run.ps1 C:\your\file.tif
+python run.py C:\your\file.tif
 
 # Outputs C:\output\file.hdr and C:\output\file.raw
-.\run.ps1 C:\your\file.tif -o C:\output\file.hdr
+python run.py C:\your\file.tif -o C:\output\file.hdr
+```
+
+### Linux
+
+On Linux run using paths with forward slashes:
+```bash
+# Outputs /your/file.hdr and /your/file.raw
+python run.py /your/file.tif
+
+# Outputs /output/file.hdr and /output/file.raw
+python run.py /your/file.tif -o /output/file.hdr
 ```
 
 ## Directory Contents
