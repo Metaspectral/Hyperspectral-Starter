@@ -12,7 +12,7 @@
 # ==================================================================================
 
 # Example: GEOTIFF_FILE_PATH ="/location/to/enmap/img.TIF"
-GEOTIFF_FILE_PATH = "/home/metaspectral/fusion_data_dev/fusion_platform/test_data/hyperion/EO1H0250282008161110K2_SGS_01_rad_image_0000000000-0000000000.tif"
+GEOTIFF_FILE_PATH = ""
 
 # Example: OUTPUT_HDR_FILE_PATH ="/location/to/where/you/want/to/save/the/output.hdr"
-OUTPUT_HDR_FILE_PATH = "/home/metaspectral/fusion_data_dev/fusion_platform/test_data/hyperion/EO1H0250282008161110K2_SGS_01_rad_image_0000000000-0000000000.hdr"
+OUTPUT_HDR_FILE_PATH = ""
