@@ -1,8 +1,8 @@
 # ==================================================================================
 #                           CONSTANTS FILE
 #
-# DESCRIPTION: This file contains all the variables that need to be updated for
-#              the convertion of a Hyperion GeoTIFF to ENVI to work.
+# DESCRIPTION: This file contains the input variables needed for the conversion
+#              of a Hyperion GeoTIFF to ENVI to work.
 #
 # VARIABLES:
 #   GEOTIFF_FILE_PATH      - Location of the GeoTIFF to be converted
