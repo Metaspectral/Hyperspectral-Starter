@@ -12,10 +12,10 @@ The following is a list of publicly available hyperspectral data sources that yo
 
 - **WorldView-3**: WorldView-3 was the first mission to carry a multi-payload, super-spectral, high-resolution commercial satellite sensor. WorldView-3 is capable of collecting up to 680,000 km2 per day. [Register and Access WorldView-3 Data](https://earth.esa.int/eogateway/catalog/worldview-3-full-archive-and-tasking) - ✅ Supported through [WorldView-3 GeoTIFF Converter](./worldview3-to-envi-converter).
 
+- **Hyperion EO-1 (Earth Observing-1)**: NASA's satellite mission providing detailed hyperspectral images for Earth observation and research purposes. [Register and Access Hyperion EO-1 Data](https://data.nasa.gov/dataset/EO-1-Hyperion/ethf-arwz/data) - ✅ Supported using the [Hyperion Converter](./hyperion-to-envi-converter).
+
 - **PRISMA (PRecursore IperSpettrale della Missione Applicativa)**: An Italian Space Agency project providing hyperspectral data with high radiometric and spectral resolution. [Register and Access PRISMA Data](https://sbg.jpl.nasa.gov/news-events/prisma-data-are-now-available-for-access) - ❌ Not supported yet.
 
-
-- **Hyperion EO-1 (Earth Observing-1)**: NASA's satellite mission providing detailed hyperspectral images for Earth observation and research purposes. [Register and Access Hyperion EO-1 Data](https://data.nasa.gov/dataset/EO-1-Hyperion/ethf-arwz/data) - ❌ Not supported yet.
 
 - **EMIT (Earth Surface Mineral Dust Source Investigation)**: A mission dedicated to identifying the composition of mineral dust from Earth's arid regions. [Register and Access EMIT Data](https://urs.earthdata.nasa.gov/). Select "View All" on Instruments and check EMIT. - ❌ Not supported yet.
 
@@ -24,11 +24,12 @@ Our goal is to provide comprehensive support for various hyperspectral data sour
 
 ## Data Conversion Scripts
 
-While we are working on being able to import these data sources directly into Fusion, please use the following scripts. These scripts will convert the raw hyperspectral data into a compatible format for upload and processing within Fusion.
+We're working on integrating converters for all the above data sources into Fusion Platform. In the interim, the following scripts can be used to convert files into a format compatible with the Fusion Platform.
 
 - [EnMAP to ENVI]((./enmap-to-envi-converter)): Prepare EnMAP data for Fusion use.
 - [Pixxel to ENVI](./pixxel-to-envi-converter): Prepare EnMAP data for Fusion use.
 - [WorldView-3 GeoTIFF](./worldview3-to-envi-converter): Convert WorldView-3 GeoTIFFs to ENVI format.
+- [Hyperion to ENVI](./hyperion-to-envi-converter): Convert Hyperion EO-1 GeoTIFFs to ENVI format.
 
 If other formats are needed, please file an issue or contact us at [support@metaspectral.com](mailto:support@metaspectral.com).
 
