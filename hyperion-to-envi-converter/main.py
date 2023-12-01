@@ -61,7 +61,7 @@ def convert_file(
 
 
 if __name__ == "__main__":
-    if constants.GEOTIFF_FILE_PATH and constants.OUTPUT_HDR_FILE_PATH:
-        convert_file(constants.GEOTIFF_FILE_PATH, constants.OUTPUT_HDR_FILE_PATH)
+    if constants.GEOTIFF_PATH and constants.OUTPUT_HDR_FILE_PATH:
+        convert_file(constants.GEOTIFF_PATH, constants.OUTPUT_HDR_FILE_PATH)
     else:
         app()

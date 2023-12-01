@@ -58,8 +58,8 @@ class HyperionConverter:
         print("Found directory, merging band files...")
         paths = sorted(
             [
-                os.path.join(self.tif_path, p)
-                for p in os.listdir(self.tif_path)
+                os.path.join(self.geotiff_path, p)
+                for p in os.listdir(self.geotiff_path)
                 if p.lower().endswith(".tif")
             ]
         )
@@ -91,7 +91,7 @@ class HyperionConverter:
                     dst.set_band_description(i, band_key)
 
         print(f"Saved merged raster to: {output_fp}")
-        self.tif_path = output_fp
+        self.geotiff_path = output_fp
 
     def _convert_metadata(self):
         print("Converting metadata...")
