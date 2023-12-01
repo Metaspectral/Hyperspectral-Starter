@@ -20,7 +20,7 @@ The module contains the following files:
 
 ## Using the Module (Self Installation)
 
-You must have Python 3.10 installed. 
+You must have Python 3.10 installed.
 
 ### Running a Python Virtual Environment (Optional)
 
@@ -55,6 +55,7 @@ You must have Python 3.10 installed. Through our helper script, the dependencies
 2. Run `python run.py` to convert your files
 
 You may also specify files from the command line.
+If your image is split into multiple band files, use the path of the folder contaning the band files.
 
 **NOTE: If the paths in `constants.py` are not empty, they will supersede what you specified on the command line.
 

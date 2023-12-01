@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import subprocess
 import shutil
 import sys

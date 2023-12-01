@@ -7,6 +7,7 @@
 # SOURCE:      https://developers.google.com/earth-engine/datasets/catalog/EO1_HYPERION
 #
 # ==================================================================================
+import os
 import rasterio
 import numpy as np
 from ENVI import (
@@ -45,11 +46,52 @@ class HyperionConverter:
         self.src = None
 
     def to_envi(self):
+        if os.path.isdir(self.geotiff_path):
+            self._merge_band_files()
         self.src = rasterio.open(self.geotiff_path)
         # Metadata conversion MUST be done before raw data conversion
         hdr = self._convert_metadata()
         raw = self._convert_raw_data()
-        return hdr, raw
+        return hdr, raw, self.geotiff_path
+
+    def _merge_band_files(self):
+        print("Found directory, merging band files...")
+        paths = sorted(
+            [
+                os.path.join(self.tif_path, p)
+                for p in os.listdir(self.tif_path)
+                if p.lower().endswith(".tif")
+            ]
+        )
+
+        # File to save the merged raster
+        output_fp = paths[0].replace("_B001_", "_MERGED_")
+
+        # Read the first file to get the metadata
+        with rasterio.open(paths[0]) as src0:
+            meta = src0.meta
+
+        # Filter bands based on BANDS dictionary
+        filtered_bands = {}
+        for i, path in enumerate(paths, start=1):
+            band_key = f"B{i:03d}"
+            if band_key in BANDS:
+                filtered_bands[band_key] = path
+
+        # Update metadata
+        meta.update(count=len(filtered_bands), dtype=rasterio.float32)
+
+        # Read each filtered band, cast to float32, and write it to disk
+        with rasterio.open(output_fp, "w", **meta) as dst:
+            for i, (band_key, path) in enumerate(filtered_bands.items(), start=1):
+                with rasterio.open(path) as src1:
+                    print(f"Merging band: {band_key}...")
+                    data = src1.read(1).astype(np.float32)
+                    dst.write_band(i, data)
+                    dst.set_band_description(i, band_key)
+
+        print(f"Saved merged raster to: {output_fp}")
+        self.tif_path = output_fp
 
     def _convert_metadata(self):
         print("Converting metadata...")
@@ -69,7 +111,8 @@ class HyperionConverter:
         with open(self.geotiff_path, "rb") as tiff_file:
             self.envi.byte_order = BOM_MAP.get(tiff_file.read(2), ByteOrderEnum.UNKNOWN)
 
-        for band_key in self.src.descriptions:
+        for i, band_key in enumerate(self.src.descriptions, start=1):
+            band_key = band_key or f"B{i:03d}"
             band = BANDS[band_key]
             self.envi.wavelength.append(band.center_wavelength)
             self.envi.fwhm.append(band.fwhm)

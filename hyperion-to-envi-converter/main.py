@@ -24,21 +24,28 @@ def convert_file(
         None, "--output", "-o", help="The output file path (must end in .hdr)"
     ),
 ):
-    if not os.path.exists(file_path):
+    no_ext_path, ext = os.path.splitext(file_path)
+    if os.path.exists(file_path):
+        file_path = file_path
+    elif os.path.exists(no_ext_path + ext.upper()):
+        file_path = no_ext_path + ext.upper()
+    elif os.path.exists(no_ext_path + ext.lower()):
+        file_path = no_ext_path + ext.lower()
+    else:
         typer.echo(f"File path {file_path} does not exist")
         exit(1)
 
     print("==============================================")
     print("              HYPERION CONVERSION")
     print("==============================================")
+    print(f"Converting {file_path}...")
 
     converter_now = datetime.now()
-    tif_file_path = os.path.join("test_data/hyperion/", file_path)
-    no_ext_path = tif_file_path.removesuffix(".tif")
-    hdr_file_path = output or f"{no_ext_path}.hdr"
+    converter = HyperionConverter(file_path)
 
-    converter = HyperionConverter(tif_file_path)
-    hdr, raw = converter.to_envi()
+    hdr, raw, geotiff_path = converter.to_envi()
+    no_ext_path = os.path.splitext(geotiff_path)[0]
+    hdr_file_path = output or f"{no_ext_path}.hdr"
 
     print(f"Saving {hdr_file_path}...")
     spectral.envi.save_image(
