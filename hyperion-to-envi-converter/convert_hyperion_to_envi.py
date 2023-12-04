@@ -46,12 +46,16 @@ class HyperionConverter:
         self.src = None
 
     def to_envi(self):
+        remove_after = False
         if os.path.isdir(self.geotiff_path):
             self._merge_band_files()
+            remove_after = True
         self.src = rasterio.open(self.geotiff_path)
         # Metadata conversion MUST be done before raw data conversion
         hdr = self._convert_metadata()
         raw = self._convert_raw_data()
+        if remove_after:
+            os.remove(self.geotiff_path)
         return hdr, raw, self.geotiff_path
 
     def _merge_band_files(self):
