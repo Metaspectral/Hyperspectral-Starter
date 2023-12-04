@@ -1,0 +1,5 @@
+rasterio
+numpy
+spectral
+pydantic
+typer
